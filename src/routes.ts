@@ -1,3 +1,4 @@
+import { applyTransition, WorkflowError } from "./workflow";
 import { Router } from "express";
 import { randomUUID } from "crypto";
 import { store } from "./store";
@@ -33,6 +34,7 @@ router.post("/", (req, res) => {
     requesterId: user.id,
     createdAt: now,
     updatedAt: now,
+    history: []
   };
 
   res.status(201).json(store.add(request));
@@ -65,6 +67,34 @@ router.get("/:id", (req, res) => {
   }
 
   res.json(request);
+});
+
+// Change status
+router.patch("/:id/status", (req, res) => {
+  const user: User = res.locals.user;
+  const { status, comment } = req.body ?? {};
+
+  if (!STATUSES.includes(status)) {
+    return res.status(400).json({ error: `status must be one of ${STATUSES.join(", ")}` });
+  }
+
+  const request = store.getById(req.params.id);
+  if (!request) return res.status(404).json({ error: "Request not found" });
+
+  try {
+    const updated = applyTransition(
+      request,
+      status,
+      user,
+      typeof comment === "string" ? comment : undefined
+    );
+    res.json(store.update(updated));
+  } catch (err) {
+    if (err instanceof WorkflowError) {
+      return res.status(err.statusCode).json({ error: err.message });
+    }
+    throw err;
+  }
 });
 
 export default router;

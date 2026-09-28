@@ -14,4 +14,10 @@ export const store = {
   getById(id: string): OpsRequest | undefined {
     return requests.find((r) => r.id === id);
   },
+  update(updated: OpsRequest): OpsRequest {
+    const index = requests.findIndex((r) => r.id === updated.id);
+    if (index === -1) throw new Error("Request not found");
+    requests[index] = updated;
+    return updated;
+  },
 };

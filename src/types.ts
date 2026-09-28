@@ -12,9 +12,18 @@ export interface OpsRequest {
   requesterId: string;
   createdAt: string;
   updatedAt: string;
+  history: StatusChange[];
 }
 
 export interface User {
   id: string;
   role: Role;
+}
+
+export interface StatusChange {
+  from: Status;
+  to: Status;
+  by: string;
+  at: string;
+  comment?: string;
 }

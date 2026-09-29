@@ -8,7 +8,9 @@
     "strict": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "isolatedModules": true,
+    "types": ["node","jest"]
   },
+  "exclude": ["node_modules", "dist", "src/**/*.test.ts"],
   "include": ["src"]
 }

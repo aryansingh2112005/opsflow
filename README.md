@@ -1,3 +1,7 @@
+!\[CI](https://github.com/aryansingh2112005/opsflow/actions/workflows/ci.yml/badge.svg)
+
+
+
 \# OpsFlow
 
 

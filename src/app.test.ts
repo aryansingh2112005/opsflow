@@ -55,6 +55,16 @@ describe("POST /requests", () => {
       .send({ ...sampleBody, priority: "URGENT" });
     expect(res.status).toBe(400);
   });
+
+  it("returns 400 for malformed JSON instead of 500", async () => {
+    const res = await request(app)
+      .post("/requests")
+      .set(req)
+      .set("Content-Type", "application/json")
+      .send("{bad json");
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/malformed json/i);
+  });
 });
 
 describe("GET /requests and /requests/:id", () => {

@@ -1,6 +1,6 @@
-﻿![CI](https://github.com/aryansingh2112005/opsflow/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/aryansingh2112005/opsflow/actions/workflows/ci.yml/badge.svg)
 
-Live demo: http://100.25.207.92/health
+Live demo: https://opsflow-drab.vercel.app/health
 
 # OpsFlow
 
